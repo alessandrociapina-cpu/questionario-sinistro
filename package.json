@@ -4,8 +4,8 @@
   "description": "Questionário de Apuração de Responsabilidade – Sabesp",
   "private": true,
   "scripts": {
-    "lint": "eslint script.js formHandler.js reportGenerator.js utils.js domUtils.js modules/*.js tests/**/*.test.js",
-    "lint:fix": "eslint script.js formHandler.js reportGenerator.js utils.js domUtils.js modules/*.js tests/**/*.test.js --fix",
+    "lint": "eslint sw.js script.js formHandler.js reportGenerator.js utils.js domUtils.js modules/*.js tests/**/*.test.js",
+    "lint:fix": "eslint sw.js script.js formHandler.js reportGenerator.js utils.js domUtils.js modules/*.js tests/**/*.test.js --fix",
     "format": "prettier --write \"*.{js,html,css}\" \"modules/*.js\"",
     "test": "jest",
     "test:coverage": "jest --coverage",

@@ -1,4 +1,4 @@
-/* global Editor, mostrarAlerta, confirmar, salvarDB, carregarDB, limparDB, validarEsquemaProjeto, nomeArquivoProjeto, ESTADO_VERSAO, formatarDataISO */
+/* global Editor, mostrarAlerta, confirmar, salvarDB, carregarDB, limparDB, validarEsquemaProjeto, nomeArquivoProjeto, ESTADO_VERSAO */
 'use strict';
 
 const FormHandler = (() => {

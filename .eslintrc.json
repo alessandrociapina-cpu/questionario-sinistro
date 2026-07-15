@@ -7,24 +7,6 @@
   "parserOptions": {
     "ecmaVersion": "latest"
   },
-  "globals": {
-    "Quill": "readonly",
-    "Editor": "readonly",
-    "FormHandler": "readonly",
-    "ReportGenerator": "readonly",
-    "esc": "readonly",
-    "formatarDataISO": "readonly",
-    "sanitizarNomeArquivo": "readonly",
-    "validarEsquemaProjeto": "readonly",
-    "nomeArquivoProjeto": "readonly",
-    "DEPARTAMENTO_PADRAO": "readonly",
-    "ESTADO_VERSAO": "readonly",
-    "mostrarAlerta": "readonly",
-    "confirmar": "readonly",
-    "salvarDB": "readonly",
-    "carregarDB": "readonly",
-    "limparDB": "readonly"
-  },
   "rules": {
     "no-unused-vars": ["warn", { "argsIgnorePattern": "^_" }],
     "no-console": ["warn", { "allow": ["error"] }],
