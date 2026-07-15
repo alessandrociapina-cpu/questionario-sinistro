@@ -1,0 +1,397 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; worker-src 'self'; object-src 'none'; base-uri 'none'"
+    />
+    <title>Questionário de Apuração de Responsabilidade</title>
+
+    <link rel="manifest" href="manifest.json" />
+    <meta name="theme-color" content="#0056b3" />
+    <link rel="icon" href="icon-192.png" />
+    <link rel="apple-touch-icon" href="icon-192.png" />
+
+    <link rel="stylesheet" href="vendor/quill.snow.css" />
+    <link rel="stylesheet" href="style.css?v=1" />
+  </head>
+  <body>
+    <div class="container">
+      <div class="header">
+        <img src="sabesp-logo.png" alt="Logo Sabesp" class="logo" />
+        <h1>Questionário de Apuração de Responsabilidade</h1>
+      </div>
+
+      <p class="versao-info">Versão 1.0 | Última atualização: 15/07/2026</p>
+
+      <div class="barra-rascunho">
+        <span class="barra-rascunho-titulo">Gerenciar rascunho:</span>
+        <button type="button" id="btnSalvarProjeto" class="botao-rascunho botao-baixar">
+          💾 Baixar Projeto
+        </button>
+        <label for="inputCarregarProjeto" class="botao-rascunho botao-carregar">
+          📂 Carregar Projeto
+        </label>
+        <input type="file" id="inputCarregarProjeto" accept=".json" hidden />
+        <button type="button" id="btnNovoQuestionario" class="botao-rascunho botao-novo">
+          🗑️ Novo Questionário
+        </button>
+        <span id="autoSaveStatus" class="auto-save-status">Nenhum rascunho salvo</span>
+      </div>
+
+      <form id="questionarioForm">
+        <fieldset>
+          <legend>Endereço da ocorrência</legend>
+          <div class="form-group">
+            <label for="endereco">Endereço:</label>
+            <input type="text" id="endereco" name="endereco" placeholder="Digite o endereço completo" />
+          </div>
+        </fieldset>
+
+        <fieldset>
+          <legend>01 - Reclamação do usuário</legend>
+          <div class="form-group">
+            <input type="checkbox" id="reclamacao_numero_check" name="reclamacao_numero_check" />
+            <label for="reclamacao_numero">Número reclamação:</label>
+            <input type="text" id="reclamacao_numero" name="reclamacao_numero" />
+            <label for="reclamacao_data">De:</label>
+            <input type="date" id="reclamacao_data" name="reclamacao_data" />
+          </div>
+          <div class="form-group-checkbox-vertical">
+            <div>
+              <input type="checkbox" id="regional_area" name="regional_area" /><label for="regional_area">Regional da área</label>
+            </div>
+            <div>
+              <input type="checkbox" id="regional_outra" name="regional_outra" /><label for="regional_outra">Regional outra área</label>
+            </div>
+            <div>
+              <input type="checkbox" id="plantao" name="plantao" /><label for="plantao">Plantão</label>
+            </div>
+            <div>
+              <input type="checkbox" id="reclamacao_outras_check" name="reclamacao_outras_check" /><label for="reclamacao_outras_check">Outras</label>
+              <input type="text" id="reclamacao_outras_text" name="reclamacao_outras_text" class="hidden-field" />
+            </div>
+          </div>
+        </fieldset>
+
+        <fieldset>
+          <legend>02 - Providências tomadas</legend>
+          <div class="form-group">
+            <input type="checkbox" id="atendimento_check" name="atendimento_check" />
+            <label for="atendimento_data">Data de atendimento ao usuário:</label>
+            <input type="date" id="atendimento_data" name="atendimento_data" />
+            <label for="atendimento_hora">Hora:</label>
+            <input type="time" id="atendimento_hora" name="atendimento_hora" />
+          </div>
+          <div class="form-group">
+            <input type="checkbox" id="contratada_check" name="contratada_check" />
+            <label for="contratada_data">Acionou equipe da contratada - Data:</label>
+            <input type="date" id="contratada_data" name="contratada_data" />
+            <label for="contratada_hora">Hora:</label>
+            <input type="time" id="contratada_hora" name="contratada_hora" />
+          </div>
+          <div class="form-group-checkbox-vertical">
+            <div>
+              <input type="checkbox" id="apoio_sabesp" name="apoio_sabesp" /><label for="apoio_sabesp">Acionou outras unidades de apoio da Sabesp</label>
+            </div>
+            <div>
+              <input type="checkbox" id="falta_equipamento" name="falta_equipamento" /><label for="falta_equipamento">Não providenciou equipe por falta de equipamento</label>
+            </div>
+            <div>
+              <input type="checkbox" id="providencias_outras_check" name="providencias_outras_check" /><label for="providencias_outras_check">Outras</label>
+              <input type="text" id="providencias_outras_text" name="providencias_outras_text" class="hidden-field" />
+            </div>
+          </div>
+        </fieldset>
+
+        <fieldset>
+          <legend>03 - Verificou tratar-se de sinistro com origem em</legend>
+          <div class="form-group-checkbox">
+            <input type="checkbox" id="origem_agua" name="origem_agua" /><label for="origem_agua">Água</label>
+            <input type="checkbox" id="origem_esgoto" name="origem_esgoto" /><label for="origem_esgoto">Esgoto</label>
+            <input type="checkbox" id="origem_outras_check" name="origem_outras_check" /><label for="origem_outras_check">Outras</label>
+            <input type="text" id="origem_outras_text" name="origem_outras_text" class="hidden-field" />
+          </div>
+          <div class="form-group">
+            <label for="diametro">Diâmetro da tubulação:</label>
+            <input type="text" id="diametro" name="diametro" />
+            <label for="material">Material:</label>
+            <input type="text" id="material" name="material" />
+          </div>
+          <div class="inline-subgroup">
+            <p>Arrebentamento:</p>
+            <input type="checkbox" id="arrebentamento_rede" name="arrebentamento_rede" /><label for="arrebentamento_rede">Rede</label>
+            <input type="checkbox" id="arrebentamento_ramal" name="arrebentamento_ramal" /><label for="arrebentamento_ramal">Ramal</label>
+          </div>
+          <div class="inline-subgroup">
+            <p>Vazamento:</p>
+            <input type="checkbox" id="vazamento_rede" name="vazamento_rede" /><label for="vazamento_rede">Rede</label>
+            <input type="checkbox" id="vazamento_ramal" name="vazamento_ramal" /><label for="vazamento_ramal">Ramal</label>
+          </div>
+          <div class="form-group-checkbox-vertical">
+            <div>
+              <input type="checkbox" id="refluxo_esgoto" name="refluxo_esgoto" /><label for="refluxo_esgoto">Refluxo de esgoto</label>
+            </div>
+          </div>
+          <div class="inline-subgroup">
+            <p>Obras:</p>
+            <input type="checkbox" id="obras_empreitera" name="obras_empreitera" /><label for="obras_empreitera">Empreiteira</label>
+            <input type="checkbox" id="obras_sabesp" name="obras_sabesp" /><label for="obras_sabesp">Sabesp</label>
+            <input type="checkbox" id="obras_outras_check" name="obras_outras_check" /><label for="obras_outras_check">Outras</label>
+            <input type="text" id="obras_outras_text" name="obras_outras_text" class="hidden-field" />
+          </div>
+        </fieldset>
+
+        <fieldset>
+          <legend>04 - Caracterização de responsabilidade da ocorrência</legend>
+          <div class="form-group-checkbox-vertical">
+            <div>
+              <input type="checkbox" id="resp_sabesp" name="resp_sabesp" /><label for="resp_sabesp">Sabesp</label>
+            </div>
+            <div>
+              <input type="checkbox" id="resp_parcial" name="resp_parcial" /><label for="resp_parcial">Sabesp com responsabilidade parcial</label>
+            </div>
+            <div>
+              <input type="checkbox" id="resp_nao_sabesp" name="resp_nao_sabesp" /><label for="resp_nao_sabesp">Não responsabilidade da Sabesp</label>
+            </div>
+            <div>
+              <input type="checkbox" id="resp_duvidosa" name="resp_duvidosa" /><label for="resp_duvidosa">Duvidosa, não caracterizada a responsabilidade</label>
+            </div>
+            <div>
+              <input type="checkbox" id="resp_outras_check" name="resp_outras_check" /><label for="resp_outras_check">Outras</label>
+              <input type="text" id="resp_outras_text" name="resp_outras_text" class="hidden-field" />
+            </div>
+          </div>
+        </fieldset>
+
+        <fieldset>
+          <legend>05 - Se responsabilidade da Sabesp, informar o que cooperou para a ocorrência</legend>
+          <div class="form-group-checkbox-vertical">
+            <div>
+              <input type="checkbox" id="coop_idade" name="coop_idade" /><label for="coop_idade">Idade do material</label>
+            </div>
+            <div>
+              <input type="checkbox" id="coop_pressao" name="coop_pressao" /><label for="coop_pressao">Aumento de pressão na rede</label>
+            </div>
+            <div>
+              <input type="checkbox" id="coop_infiltracao" name="coop_infiltracao" /><label for="coop_infiltracao">Infiltração paulatina, ao longo de um determinado período</label>
+            </div>
+            <div>
+              <input type="checkbox" id="coop_terceiros" name="coop_terceiros" /><label for="coop_terceiros">Terceiros</label>
+            </div>
+            <div>
+              <input type="checkbox" id="coop_outras_check" name="coop_outras_check" /><label for="coop_outras_check">Outras</label>
+              <input type="text" id="coop_outras_text" name="coop_outras_text" class="hidden-field" />
+            </div>
+          </div>
+        </fieldset>
+
+        <fieldset>
+          <legend>06 - Se a responsabilidade é parcial, informar o que cooperou para a ocorrência do evento</legend>
+          <div class="form-group-checkbox-vertical">
+            <div>
+              <input type="checkbox" id="parcial_intemperie" name="parcial_intemperie" /><label for="parcial_intemperie">Intempérie da natureza (chuva, raio etc)</label>
+            </div>
+            <div>
+              <input type="checkbox" id="parcial_usuario" name="parcial_usuario" /><label for="parcial_usuario">O próprio usuário</label>
+            </div>
+            <div>
+              <input type="checkbox" id="parcial_orgaos" name="parcial_orgaos" /><label for="parcial_orgaos">Órgãos municipais, estaduais, federais ou concessionárias de serviços públicos</label>
+            </div>
+            <div>
+              <input type="checkbox" id="parcial_terceiros" name="parcial_terceiros" /><label for="parcial_terceiros">Terceiros</label>
+            </div>
+            <div>
+              <input type="checkbox" id="parcial_outras_check" name="parcial_outras_check" /><label for="parcial_outras_check">Outras</label>
+              <input type="text" id="parcial_outras_text" name="parcial_outras_text" class="hidden-field" />
+            </div>
+          </div>
+        </fieldset>
+
+        <fieldset>
+          <legend>07 - Caracterização da extensão dos prejuízos</legend>
+          <div class="form-group-checkbox-vertical">
+            <div>
+              <input type="checkbox" id="prejuizo_pequeno" name="prejuizo_pequeno" /><label for="prejuizo_pequeno">Sinistro de pequeno porte, administrado pela unidade</label>
+            </div>
+            <div>
+              <input type="checkbox" id="prejuizo_medio" name="prejuizo_medio" /><label for="prejuizo_medio">Sinistro de médio porte, administrado pela unidade com suporte de outras áreas</label>
+            </div>
+            <div>
+              <input type="checkbox" id="prejuizo_grande_unidades" name="prejuizo_grande_unidades" /><label for="prejuizo_grande_unidades">Sinistro de grande porte, com suporte de outras unidades da Sabesp</label>
+            </div>
+            <div>
+              <input type="checkbox" id="prejuizo_grande_seguradora" name="prejuizo_grande_seguradora" /><label for="prejuizo_grande_seguradora">Sinistro de grande porte com suporte da unidade da Sabesp/seguradora/IRB</label>
+            </div>
+            <div>
+              <input type="checkbox" id="prejuizo_outras_check" name="prejuizo_outras_check" /><label for="prejuizo_outras_check">Outras</label>
+              <input type="text" id="prejuizo_outras_text" name="prejuizo_outras_text" class="hidden-field" />
+            </div>
+          </div>
+        </fieldset>
+
+        <fieldset>
+          <legend>08 - Extensão dos danos. Providências tomadas com o reclamante</legend>
+          <div class="form-group-checkbox-vertical">
+            <div>
+              <input type="radio" id="danos_normal_sem_remocao" name="danos_providencias" value="normal_sem_remocao" />
+              <label for="danos_normal_sem_remocao">Atendimento normal, não houve necessidade de remoção dos sinistrados. Solicitamos documentos e orçamentos - Danos materiais em:</label>
+              <div class="sub-checkbox">
+                <input type="checkbox" id="danos_normal_sem_remocao_edificacao" name="danos_normal_sem_remocao_edificacao" /><label for="danos_normal_sem_remocao_edificacao">Edificação</label>
+                <input type="checkbox" id="danos_normal_sem_remocao_conteudo" name="danos_normal_sem_remocao_conteudo" /><label for="danos_normal_sem_remocao_conteudo">Conteúdo</label>
+              </div>
+            </div>
+            <div>
+              <input type="radio" id="danos_normal_com_remocao" name="danos_providencias" value="normal_com_remocao" />
+              <label for="danos_normal_com_remocao">Atendimento normal, houve necessidade de remoção dos sinistrados para execução dos reparos. Solicitamos documentos e orçamentos - Danos materiais em:</label>
+              <div class="sub-checkbox">
+                <input type="checkbox" id="danos_normal_com_remocao_edificacao" name="danos_normal_com_remocao_edificacao" /><label for="danos_normal_com_remocao_edificacao">Edificação</label>
+                <input type="checkbox" id="danos_normal_com_remocao_conteudo" name="danos_normal_com_remocao_conteudo" /><label for="danos_normal_com_remocao_conteudo">Conteúdo</label>
+              </div>
+            </div>
+            <div>
+              <input type="radio" id="danos_emergencial_remocao" name="danos_providencias" value="emergencial_remocao" />
+              <label for="danos_emergencial_remocao">Atendimento emergencial, houve necessidade de remoção dos sinistrados, dada a extensão dos prejuízos. Danos materiais em:</label>
+              <div class="sub-checkbox">
+                <input type="checkbox" id="danos_emergencial_remocao_edificacao" name="danos_emergencial_remocao_edificacao" /><label for="danos_emergencial_remocao_edificacao">Edificação</label>
+                <input type="checkbox" id="danos_emergencial_remocao_conteudo" name="danos_emergencial_remocao_conteudo" /><label for="danos_emergencial_remocao_conteudo">Conteúdo</label>
+              </div>
+            </div>
+            <div>
+              <input type="radio" id="danos_emergencial_outras" name="danos_providencias" value="emergencial_outras" />
+              <label for="danos_emergencial_outras">Atendimento emergencial, outras providências:</label>
+              <textarea id="danos_emergencial_outras_text" name="danos_emergencial_outras_text" class="hidden-field" rows="3"></textarea>
+            </div>
+          </div>
+        </fieldset>
+
+        <fieldset>
+          <legend>09 - Relatório fotográfico</legend>
+          <div class="form-group-checkbox">
+            <input type="checkbox" id="relatorio_foto_sim_check" name="relatorio_foto_sim_check" /><label for="relatorio_foto_sim_check">Sim</label>
+            <input type="checkbox" id="relatorio_foto_nao_check" name="relatorio_foto_nao_check" /><label for="relatorio_foto_nao_check">Não - Justificar</label>
+            <textarea id="justificativa_foto" name="justificativa_foto" class="hidden-field" rows="4" placeholder="Justifique a ausência do relatório fotográfico."></textarea>
+          </div>
+        </fieldset>
+
+        <fieldset>
+          <legend>10 - Observações/Considerações</legend>
+          <div id="observacoes-wrapper">
+            <div id="toolbar-observacoes">
+              <span class="ql-formats">
+                <select class="ql-font">
+                  <option selected>Padrão (Arial)</option>
+                  <option value="Arial">Arial</option>
+                  <option value="Calibri">Calibri</option>
+                  <option value="Courier New">Courier New</option>
+                  <option value="Georgia">Georgia</option>
+                  <option value="Tahoma">Tahoma</option>
+                  <option value="Times New Roman">Times New Roman</option>
+                  <option value="Verdana">Verdana</option>
+                </select>
+                <select class="ql-size">
+                  <option selected>Padrão</option>
+                  <option value="8pt">8</option>
+                  <option value="9pt">9</option>
+                  <option value="10pt">10</option>
+                  <option value="11pt">11</option>
+                  <option value="12pt">12</option>
+                  <option value="14pt">14</option>
+                  <option value="16pt">16</option>
+                  <option value="18pt">18</option>
+                  <option value="24pt">24</option>
+                  <option value="36pt">36</option>
+                </select>
+              </span>
+              <span class="ql-formats">
+                <button class="ql-bold" title="Negrito"></button>
+                <button class="ql-italic" title="Itálico"></button>
+                <button class="ql-underline" title="Sublinhado"></button>
+                <button class="ql-strike" title="Tachado"></button>
+              </span>
+              <span class="ql-formats">
+                <select class="ql-color" title="Cor do texto"></select>
+                <select class="ql-background" title="Cor de fundo"></select>
+              </span>
+              <span class="ql-formats">
+                <select class="ql-align" title="Alinhamento"></select>
+                <button class="ql-list" value="ordered" title="Lista numerada"></button>
+                <button class="ql-list" value="bullet" title="Lista com marcadores"></button>
+                <button class="ql-indent" value="-1" title="Diminuir recuo"></button>
+                <button class="ql-indent" value="+1" title="Aumentar recuo"></button>
+              </span>
+              <span class="ql-formats">
+                <button class="ql-divider" title="Inserir linha horizontal"></button>
+                <select class="ql-tabela" title="Tabela">
+                  <option selected>Tabela</option>
+                  <option value="inserir">Inserir tabela 3×3</option>
+                  <option value="linha-acima">Inserir linha acima</option>
+                  <option value="linha-abaixo">Inserir linha abaixo</option>
+                  <option value="coluna-esquerda">Inserir coluna à esquerda</option>
+                  <option value="coluna-direita">Inserir coluna à direita</option>
+                  <option value="excluir-linha">Excluir linha</option>
+                  <option value="excluir-coluna">Excluir coluna</option>
+                  <option value="excluir-tabela">Excluir tabela</option>
+                </select>
+              </span>
+              <span class="ql-formats">
+                <button class="ql-clean" title="Limpar formatação"></button>
+              </span>
+            </div>
+            <div id="editor-observacoes"></div>
+          </div>
+        </fieldset>
+
+        <fieldset id="responsavelFieldset">
+          <legend>Responsável pela apuração</legend>
+          <div class="form-group">
+            <label for="responsavel_nome">Nome do responsável:</label>
+            <input type="text" id="responsavel_nome" name="responsavel_nome" />
+          </div>
+          <div class="form-group">
+            <label for="responsavel_cargo">Cargo:</label>
+            <select id="responsavel_cargo" name="responsavel_cargo">
+              <option value="Engenheiro">Engenheiro</option>
+              <option value="Técnico de Saneamento">Técnico de Saneamento</option>
+              <option value="ASA">ASA</option>
+              <option value="Analista">Analista</option>
+              <option value="Sem cargo">Sem cargo definido</option>
+            </select>
+          </div>
+        </fieldset>
+      </form>
+
+      <div class="actions">
+        <button type="button" id="generateReportBtn">Gerar relatório visual</button>
+      </div>
+
+      <div id="reportOutput"></div>
+    </div>
+
+    <div id="modal-app" class="modal-overlay">
+      <div class="modal-caixa">
+        <p id="modal-mensagem"></p>
+        <div class="modal-acoes">
+          <button type="button" id="modal-btn-cancelar" class="modal-btn-secundario">Cancelar</button>
+          <button type="button" id="modal-btn-ok" class="modal-btn-principal">OK</button>
+        </div>
+      </div>
+    </div>
+
+    <div id="toast-atualizacao" class="toast" hidden>
+      <span>Nova versão disponível.</span>
+      <button type="button" id="btn-recarregar">Recarregar</button>
+    </div>
+
+    <script src="vendor/quill.js"></script>
+    <script src="utils.js?v=1"></script>
+    <script src="domUtils.js?v=1"></script>
+    <script src="modules/storage.js?v=1"></script>
+    <script src="modules/editor.js?v=1"></script>
+    <script src="formHandler.js?v=1"></script>
+    <script src="reportGenerator.js?v=1"></script>
+    <script src="script.js?v=1"></script>
+  </body>
+</html>

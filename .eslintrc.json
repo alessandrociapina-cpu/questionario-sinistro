@@ -1,0 +1,46 @@
+{
+  "env": {
+    "browser": true,
+    "es2021": true
+  },
+  "extends": "eslint:recommended",
+  "parserOptions": {
+    "ecmaVersion": "latest"
+  },
+  "globals": {
+    "Quill": "readonly",
+    "Editor": "readonly",
+    "FormHandler": "readonly",
+    "ReportGenerator": "readonly",
+    "esc": "readonly",
+    "formatarDataISO": "readonly",
+    "sanitizarNomeArquivo": "readonly",
+    "validarEsquemaProjeto": "readonly",
+    "nomeArquivoProjeto": "readonly",
+    "DEPARTAMENTO_PADRAO": "readonly",
+    "ESTADO_VERSAO": "readonly",
+    "mostrarAlerta": "readonly",
+    "confirmar": "readonly",
+    "salvarDB": "readonly",
+    "carregarDB": "readonly",
+    "limparDB": "readonly"
+  },
+  "rules": {
+    "no-unused-vars": ["warn", { "argsIgnorePattern": "^_" }],
+    "no-console": ["warn", { "allow": ["error"] }],
+    "eqeqeq": ["error", "always"],
+    "no-var": "error",
+    "prefer-const": "warn"
+  },
+  "overrides": [
+    {
+      "files": ["tests/**/*.js"],
+      "env": { "jest": true, "node": true },
+      "rules": { "no-console": "off" }
+    },
+    {
+      "files": ["sw.js"],
+      "env": { "serviceworker": true }
+    }
+  ]
+}

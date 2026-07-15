@@ -1,0 +1,662 @@
+/* --- ESTILOS GERAIS --- */
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f4f4f9;
+  color: #333;
+  line-height: 1.6;
+  display: flex;
+  justify-content: center;
+  padding: 20px;
+  margin: 0;
+}
+
+.container {
+  background: #fff;
+  padding: 30px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 900px;
+}
+
+.header {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 10px;
+  min-height: 120px;
+}
+
+.logo {
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  height: 120px;
+  width: auto;
+}
+
+h1 {
+  color: #0056b3;
+  text-align: center;
+  margin: 0;
+  font-size: 1.8em;
+  padding: 0 150px;
+}
+
+.versao-info {
+  text-align: center;
+  font-size: 0.8em;
+  color: #6c757d;
+  margin: 0 0 20px;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+}
+
+fieldset {
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+legend {
+  font-weight: bold;
+  color: #0056b3;
+  padding: 0 10px;
+}
+
+.form-group,
+.form-group-checkbox {
+  margin-bottom: 15px;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 5px 15px;
+}
+
+.form-group-checkbox > .hidden-field {
+  width: 250px;
+  flex-grow: 0;
+}
+
+.form-group-checkbox-vertical > div {
+  display: flex;
+  align-items: flex-start;
+  margin-bottom: 10px;
+  flex-wrap: nowrap;
+}
+
+.form-group-checkbox-vertical > div > label {
+  flex: 1;
+  padding-right: 15px;
+}
+
+label {
+  margin-right: 5px;
+  margin-left: 5px;
+  white-space: normal;
+}
+
+label[for^='danos_'] {
+  white-space: normal;
+}
+
+input[type='text'],
+input[type='date'],
+input[type='time'],
+textarea,
+select {
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  flex-grow: 1;
+  font-size: 1em;
+  font-family: Arial, sans-serif;
+}
+
+.form-group input,
+.form-group select {
+  width: auto;
+}
+
+input[type='checkbox'],
+input[type='radio'] {
+  margin-right: 8px;
+  flex-shrink: 0;
+  margin-top: 4px;
+}
+
+.inline-subgroup {
+  border-left: 3px solid #e0e0e0;
+  padding-left: 15px;
+  margin: 10px 0;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 15px;
+}
+
+.inline-subgroup > .hidden-field {
+  width: 250px;
+  flex-grow: 0;
+}
+
+.inline-subgroup p {
+  font-weight: bold;
+  margin-right: 15px;
+}
+
+.sub-checkbox {
+  border-left: 1px dotted #ccc;
+  padding-left: 15px;
+  margin-left: 15px;
+  flex-shrink: 0;
+}
+
+.sub-checkbox > label {
+  white-space: nowrap;
+}
+
+textarea {
+  resize: vertical;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.hidden-field {
+  display: none;
+  width: 250px;
+  flex-grow: 0;
+  margin-left: 5px;
+}
+
+.actions {
+  text-align: center;
+}
+
+button {
+  background-color: #0056b3;
+  color: white;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: bold;
+  margin-top: 20px;
+  transition: background-color 0.3s;
+}
+
+button:hover {
+  background-color: #004494;
+}
+
+/* --- BARRA DE RASCUNHO --- */
+.barra-rascunho {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+  background-color: #f8f9fa;
+  border: 1px solid #dee2e6;
+  border-radius: 5px;
+  padding: 12px 15px;
+  margin-bottom: 20px;
+}
+
+.barra-rascunho-titulo {
+  font-weight: bold;
+  color: #495057;
+  margin-right: 5px;
+}
+
+.botao-rascunho {
+  margin-top: 0;
+  padding: 8px 14px;
+  font-size: 0.9em;
+  border-radius: 5px;
+  border: none;
+  color: #fff;
+  cursor: pointer;
+  font-weight: bold;
+  display: inline-block;
+}
+
+.botao-baixar {
+  background-color: #17a2b8;
+}
+
+.botao-baixar:hover {
+  background-color: #128294;
+}
+
+.botao-carregar {
+  background-color: #6c757d;
+  margin-left: 0;
+  margin-right: 0;
+}
+
+.botao-carregar:hover {
+  background-color: #5a6268;
+}
+
+.botao-novo {
+  background-color: #b34700;
+}
+
+.botao-novo:hover {
+  background-color: #8c3800;
+}
+
+.auto-save-status {
+  font-size: 0.85em;
+  color: #6c757d;
+  font-style: italic;
+  width: 100%;
+  text-align: right;
+}
+
+/* --- EDITOR DE TEXTO RICO (QUILL) --- */
+#observacoes-wrapper {
+  border-radius: 4px;
+}
+
+#toolbar-observacoes {
+  border-radius: 4px 4px 0 0;
+  background-color: #f8f9fa;
+}
+
+#editor-observacoes {
+  min-height: 400px;
+  border-radius: 0 0 4px 4px;
+}
+
+.ql-container {
+  font-family: Arial, sans-serif;
+  font-size: 12pt;
+}
+
+.ql-editor {
+  min-height: 400px;
+}
+
+/* Mostra cada fonte do menu no seu próprio tipo */
+.ql-font .ql-picker-item[data-value='Arial']::before,
+.ql-font .ql-picker-label[data-value='Arial']::before {
+  font-family: Arial, sans-serif;
+}
+.ql-font .ql-picker-item[data-value='Calibri']::before,
+.ql-font .ql-picker-label[data-value='Calibri']::before {
+  font-family: Calibri, sans-serif;
+}
+.ql-font .ql-picker-item[data-value='Courier New']::before,
+.ql-font .ql-picker-label[data-value='Courier New']::before {
+  font-family: 'Courier New', monospace;
+}
+.ql-font .ql-picker-item[data-value='Georgia']::before,
+.ql-font .ql-picker-label[data-value='Georgia']::before {
+  font-family: Georgia, serif;
+}
+.ql-font .ql-picker-item[data-value='Tahoma']::before,
+.ql-font .ql-picker-label[data-value='Tahoma']::before {
+  font-family: Tahoma, sans-serif;
+}
+.ql-font .ql-picker-item[data-value='Times New Roman']::before,
+.ql-font .ql-picker-label[data-value='Times New Roman']::before {
+  font-family: 'Times New Roman', serif;
+}
+.ql-font .ql-picker-item[data-value='Verdana']::before,
+.ql-font .ql-picker-label[data-value='Verdana']::before {
+  font-family: Verdana, sans-serif;
+}
+
+/* O menu de tabela é um menu de ações: o rótulo é sempre "Tabela" */
+.ql-picker.ql-tabela {
+  width: 90px;
+}
+
+.ql-picker.ql-tabela .ql-picker-label::before {
+  content: '▦ Tabela';
+}
+
+.ql-picker.ql-tabela .ql-picker-options {
+  width: 190px;
+}
+
+/* --- MODAL --- */
+.modal-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 20px;
+}
+
+.modal-caixa {
+  background: #fff;
+  border-radius: 8px;
+  padding: 25px;
+  max-width: 480px;
+  width: 100%;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+}
+
+#modal-mensagem {
+  margin: 0 0 20px;
+  white-space: pre-wrap;
+  color: #333;
+}
+
+.modal-acoes {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.modal-btn-principal,
+.modal-btn-secundario {
+  margin-top: 0;
+  padding: 8px 18px;
+  font-size: 0.95em;
+}
+
+.modal-btn-secundario {
+  background-color: #6c757d;
+}
+
+.modal-btn-secundario:hover {
+  background-color: #5a6268;
+}
+
+.modal-overlay[data-tipo='erro'] #modal-mensagem {
+  color: #a12622;
+  font-weight: bold;
+}
+
+/* --- TOAST DE ATUALIZAÇÃO --- */
+.toast {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #343a40;
+  color: #fff;
+  padding: 12px 20px;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  z-index: 1100;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.toast[hidden] {
+  display: none;
+}
+
+.toast button {
+  margin-top: 0;
+  padding: 6px 12px;
+  font-size: 0.85em;
+  background-color: #0d6efd;
+}
+
+#reportOutput {
+  margin-top: 30px;
+  border: 2px solid #0056b3;
+  border-radius: 5px;
+  background-color: #fff;
+  overflow: hidden;
+  padding: 20px;
+}
+
+#reportOutput:empty {
+  display: none;
+  border: none;
+  padding: 0;
+  margin: 0;
+}
+
+/* --- ESTILOS PARA A VISUALIZAÇÃO DO RELATÓRIO --- */
+.report-view {
+  padding: 0;
+}
+
+.report-view .header {
+  justify-content: center;
+}
+
+.report-view h1 {
+  font-size: 1.5em;
+}
+
+.report-view input[type='text'],
+.report-view input[type='date'],
+.report-view input[type='time'],
+.report-view textarea,
+.report-view select {
+  border: none;
+  background-color: transparent;
+  color: #000;
+  padding: 8px 0;
+  cursor: default;
+  font-weight: bold;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  font-size: 1em;
+  font-family: Arial, sans-serif;
+}
+
+.report-view textarea {
+  height: auto;
+  min-height: 50px;
+  white-space: pre-wrap;
+}
+
+.report-placeholder {
+  color: #555;
+  font-family: monospace;
+  font-size: 1em;
+  padding: 8px 0;
+  display: inline-block;
+  font-weight: normal;
+}
+
+.report-view input[type='checkbox'],
+.report-view input[type='radio'] {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  border: 1px solid #555;
+  width: 16px;
+  height: 16px;
+  position: relative;
+  cursor: default;
+}
+
+.report-view input[type='checkbox'] {
+  border-radius: 3px;
+}
+
+.report-view input[type='radio'] {
+  border-radius: 50%;
+}
+
+.report-view input[type='checkbox']:checked::before {
+  content: '✔';
+  font-size: 14px;
+  color: #000;
+  position: absolute;
+  top: -2px;
+  left: 2px;
+  font-weight: bold;
+}
+
+.report-view input[type='radio']:checked::before {
+  content: '';
+  display: block;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #000;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.report-view .hidden-field {
+  display: inline-block !important;
+}
+
+.responsavel-report p {
+  margin: 0;
+  line-height: 1.4;
+}
+
+/*
+ * O bloco de observações do relatório reaproveita a classe `ql-editor` para
+ * herdar do CSS do Quill a renderização de listas e tabelas. Aqui só desfazemos
+ * o que é próprio de um campo editável (altura fixa, rolagem, padding).
+ */
+.report-rich-text {
+  height: auto !important;
+  min-height: 0 !important;
+  overflow: visible !important;
+  padding: 8px 0 !important;
+  color: #000;
+  font-family: Arial, sans-serif;
+  font-size: 1em;
+  line-height: 1.6;
+}
+
+.report-rich-text .report-vazio {
+  font-style: italic;
+  color: #555;
+}
+
+.report-rich-text hr {
+  border: none;
+  border-top: 1px solid #000;
+  margin: 10px 0;
+}
+
+.print-btn {
+  background-color: #008a0e;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  margin-bottom: 10px;
+  display: inline-block;
+}
+
+.print-btn:hover {
+  background-color: #006b0b;
+}
+
+.print-message {
+  font-size: 0.9em;
+  color: #333;
+  background-color: #e9f5ff;
+  border: 1px solid #b3d7f7;
+  border-radius: 4px;
+  padding: 10px;
+  margin-top: 5px;
+  margin-bottom: 20px;
+  text-align: left;
+}
+
+.report-placeholder-text {
+  color: #555;
+  font-style: italic;
+  font-weight: normal;
+  padding: 8px 0;
+  display: inline-block;
+}
+
+/* --- RESPONSIVO --- */
+@media (max-width: 700px) {
+  body {
+    padding: 8px;
+  }
+
+  .container {
+    padding: 15px;
+  }
+
+  .header {
+    flex-direction: column;
+    min-height: 0;
+    gap: 10px;
+  }
+
+  .logo {
+    position: static;
+    transform: none;
+    height: 70px;
+  }
+
+  h1 {
+    padding: 0;
+    font-size: 1.3em;
+  }
+
+  .auto-save-status {
+    text-align: left;
+  }
+
+  .form-group-checkbox-vertical > div {
+    flex-wrap: wrap;
+  }
+
+  .sub-checkbox {
+    margin-left: 0;
+    border-left: none;
+    padding-left: 0;
+  }
+}
+
+/* --- ESTILOS ESPECÍFICOS PARA IMPRESSÃO --- */
+@media print {
+  body > .container > *:not(#reportOutput) {
+    display: none;
+  }
+
+  body,
+  .container,
+  #reportOutput {
+    margin: 0;
+    padding: 0;
+    border: none;
+    box-shadow: none;
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .print-btn,
+  .print-message,
+  #modal-app,
+  #toast-atualizacao {
+    display: none !important;
+  }
+
+  .report-rich-text table {
+    page-break-inside: auto;
+  }
+
+  .report-rich-text tr {
+    page-break-inside: avoid;
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "name": "Questionário de Apuração de Responsabilidade",
+  "short_name": "Questionário Sinistro",
+  "description": "Questionário de apuração de responsabilidade de sinistros, com rascunho offline e relatório para impressão.",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#f4f4f9",
+  "theme_color": "#0056b3",
+  "lang": "pt-BR",
+  "icons": [
+    {
+      "src": "icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
