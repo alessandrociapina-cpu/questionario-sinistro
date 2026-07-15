@@ -315,7 +315,14 @@ button:hover {
   font-family: Verdana, sans-serif;
 }
 
-/* O menu de tabela é um menu de ações: o rótulo é sempre "Tabela" */
+/*
+ * O menu de tabela é um menu de ações, não um formato com estado: o rótulo é
+ * sempre "Tabela", independente do que foi escolhido por último.
+ *
+ * O CSS do Quill só desenha `content: attr(data-label)` para os seus próprios
+ * pickers (ql-font, ql-size, ql-header). Num picker customizado os itens saem
+ * em branco — por isso a regra abaixo é obrigatória, não cosmética.
+ */
 .ql-picker.ql-tabela {
   width: 90px;
 }
@@ -324,8 +331,17 @@ button:hover {
   content: '▦ Tabela';
 }
 
+.ql-picker.ql-tabela .ql-picker-item::before {
+  content: attr(data-label);
+}
+
+/* O primeiro item é só o rótulo neutro do menu; não é uma ação. */
+.ql-picker.ql-tabela .ql-picker-item:first-child {
+  display: none;
+}
+
 .ql-picker.ql-tabela .ql-picker-options {
-  width: 190px;
+  width: 200px;
 }
 
 /* --- MODAL --- */

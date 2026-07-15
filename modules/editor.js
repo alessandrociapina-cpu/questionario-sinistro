@@ -67,11 +67,18 @@ const Editor = (() => {
     _quill.setSelection(range.index + 2, Quill.sources.SILENT);
   }
 
+  function _cursorEmTabela() {
+    const range = _quill.getSelection();
+    if (!range) return false;
+    const [linha] = _quill.getLine(range.index);
+    if (!linha || !linha.domNode || !linha.domNode.closest) return false;
+    return !!linha.domNode.closest('td');
+  }
+
   function _acaoTabela(valor, aoFalhar) {
-    const tabela = _quill.getModule('table');
     if (!valor) return;
 
-    // As operações de linha/coluna exigem cursor dentro de uma tabela.
+    const tabela = _quill.getModule('table');
     const acoes = {
       inserir: () => tabela.insertTable(3, 3),
       'linha-acima': () => tabela.insertRowAbove(),
@@ -86,17 +93,25 @@ const Editor = (() => {
     const acao = acoes[valor];
     if (!acao) return;
 
+    _quill.focus();
+
     if (valor === 'inserir') {
-      _quill.focus();
       acao();
       return;
     }
 
+    // Fora de uma tabela o Quill não lança erro: ele simplesmente não faz nada.
+    // Sem esta checagem o clique viraria um silêncio inexplicável para o usuário.
+    if (!_cursorEmTabela()) {
+      if (aoFalhar) aoFalhar('Coloque o cursor dentro de uma tabela para usar esta opção.');
+      return;
+    }
+
     try {
-      _quill.focus();
       acao();
     } catch (e) {
-      if (aoFalhar) aoFalhar('Coloque o cursor dentro de uma tabela para usar esta opção.');
+      console.error('Falha na ação de tabela:', e);
+      if (aoFalhar) aoFalhar('Não foi possível alterar a tabela.');
     }
   }
 
