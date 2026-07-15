@@ -63,12 +63,17 @@ Três caminhos, todos em `formHandler.js`:
 
 ## Service Worker e versionamento
 
-A cada release, **todos** estes pontos devem ser atualizados com o novo número de versão (ex: `2`):
+Versão atual: **2**. A cada release, **todos** estes pontos devem ser atualizados com o novo número
+(ex: `3`):
 
-- `sw.js`: `CACHE_NAME = 'sinistro-app-v2'` e todos os `?v=2` em `urlsToCache`
-- `index.html`: `?v=2` em todos os `<link>` e `<script>` + "Versão 2.0 | Última atualização: DD/MM/AAAA"
+- `sw.js`: `CACHE_NAME = 'sinistro-app-v3'` e todos os `?v=3` em `urlsToCache`
+- `index.html`: `?v=3` em todos os `<link>` e `<script>` + "Versão 3 | Última atualização: DD/MM/AAAA"
 
 Os arquivos de `vendor/` são cacheados sem `?v=` — a versão está fixada no nome da dependência.
+
+**Bumpar o `?v=` não é opcional.** O `fetch()` do Service Worker passa pelo cache HTTP do navegador,
+e o GitHub Pages serve os arquivos com `max-age`. Sem trocar a URL, uma correção publicada continua
+invisível para quem já abriu a versão anterior, mesmo com a estratégia network-first.
 
 ## Testes
 
