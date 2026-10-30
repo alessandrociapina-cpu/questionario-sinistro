@@ -41,6 +41,23 @@ const FormHandler = (() => {
   }
 
   /**
+   * Faz um campo "Outras" (textarea de uma linha) crescer até caber todo o
+   * texto, em vez de esconder o que passa da largura. Campo oculto ou ainda
+   * não desenhado (scrollHeight 0) fica como está.
+   */
+  function _ajustarAltura(el) {
+    if (!el.classList.contains('campo-outras')) return;
+    el.style.height = 'auto';
+    if (!el.scrollHeight) return;
+    const bordas = el.offsetHeight - el.clientHeight;
+    el.style.height = `${el.scrollHeight + bordas}px`;
+  }
+
+  function _ajustarAlturas() {
+    document.querySelectorAll('#questionarioForm .campo-outras').forEach(_ajustarAltura);
+  }
+
+  /**
    * Aplica a visibilidade dos campos condicionais a partir do estado atual dos
    * checkboxes/radios. Diferente de um listener de 'change', pode ser chamada a
    * qualquer momento — é o que faz um rascunho restaurado reabrir os campos
@@ -72,6 +89,8 @@ const FormHandler = (() => {
         target.placeholder = '';
       }
     });
+
+    _ajustarAlturas();
   }
 
   function exportarEstado() {
@@ -126,7 +145,8 @@ const FormHandler = (() => {
         _el.autoSaveStatus.textContent = `✔ Salvo às ${hora}`;
         _el.autoSaveStatus.style.color = 'green';
       } catch (e) {
-        _el.autoSaveStatus.textContent = '⚠️ Falha ao armazenar. Use "Baixar Projeto" para garantir!';
+        _el.autoSaveStatus.textContent =
+          '⚠️ Falha ao armazenar. Use "Baixar Projeto" para garantir!';
         _el.autoSaveStatus.style.color = '#d9534f';
         console.error('Falha interna no IndexedDB:', e);
       }
@@ -139,7 +159,9 @@ const FormHandler = (() => {
       if (!dados || !validarEsquemaProjeto(dados)) return;
 
       const endereco = (dados.form && dados.form.endereco) || 'Endereço não informado';
-      const salvoEm = dados.salvoEm ? new Date(dados.salvoEm).toLocaleString('pt-BR') : 'data desconhecida';
+      const salvoEm = dados.salvoEm
+        ? new Date(dados.salvoEm).toLocaleString('pt-BR')
+        : 'data desconhecida';
 
       const msg =
         `Encontramos um questionário em andamento salvo neste dispositivo:\n\n` +
@@ -215,9 +237,18 @@ const FormHandler = (() => {
     _el = elementos;
 
     _campos().forEach((el) => {
-      const evento = el.tagName === 'SELECT' || el.type === 'checkbox' || el.type === 'radio' ? 'change' : 'input';
+      const evento =
+        el.tagName === 'SELECT' || el.type === 'checkbox' || el.type === 'radio'
+          ? 'change'
+          : 'input';
       el.addEventListener(evento, salvarRascunhoLocal);
+      if (el.classList.contains('campo-outras')) {
+        el.addEventListener('input', () => _ajustarAltura(el));
+      }
     });
+
+    // A largura muda ao girar o celular ou redimensionar a janela, e com ela a quebra de linha
+    window.addEventListener('resize', _ajustarAlturas);
 
     CONDICIONAIS.forEach(([triggerId]) => {
       const trigger = document.getElementById(triggerId);
