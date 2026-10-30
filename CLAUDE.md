@@ -65,13 +65,17 @@ Os campos "Outras" são `<textarea class="campo-outras" rows="1">` que crescem c
 relatório, `_valorComoTexto()` troca todo campo de texto preenchido por um `<span>`: `input` e
 `textarea` não quebram linha na impressão, e o texto que passava da largura sumia do PDF.
 
+No campo 08, marcar "Edificação"/"Conteúdo" seleciona a opção do radio a que o subitem pertence
+(`_selecionarOpcaoDoSubitem()`). No relatório, a bolinha do radio marcado é desenhada com `border`,
+nunca com `background`: o Chrome não imprime fundos por padrão e o botão saía vazio no PDF.
+
 ## Service Worker e versionamento
 
-Versão atual: **3**. A cada release, **todos** estes pontos devem ser atualizados com o novo número
-(ex: `4`):
+Versão atual: **4**. A cada release, **todos** estes pontos devem ser atualizados com o novo número
+(ex: `5`):
 
 - `sw.js`: `CACHE_NAME = 'sinistro-app-v4'` e todos os `?v=4` em `urlsToCache`
-- `index.html`: `?v=4` em todos os `<link>` e `<script>` + "Versão 4 | Última atualização: DD/MM/AAAA"
+- `index.html`: `?v=5` em todos os `<link>` e `<script>` + "Versão 5 | Última atualização: DD/MM/AAAA"
 
 Os arquivos de `vendor/` são cacheados sem `?v=` — a versão está fixada no nome da dependência.
 

@@ -233,6 +233,22 @@ const FormHandler = (() => {
     _el.autoSaveStatus.style.color = '#6c757d';
   }
 
+  /**
+   * No campo 08, "Edificação"/"Conteúdo" pertencem a uma opção do radio. Marcar
+   * o subitem sem a opção deixava o relatório com o subitem marcado e a opção
+   * em branco — então marcar o subitem seleciona a opção dele.
+   */
+  function _selecionarOpcaoDoSubitem(evento) {
+    const subitem = evento.target;
+    if (!subitem.checked) return;
+    const radio = subitem
+      .closest('.sub-checkbox')
+      .parentElement.querySelector('input[type="radio"]');
+    if (!radio || radio.checked) return;
+    radio.checked = true;
+    sincronizarCondicionais();
+  }
+
   function init(elementos) {
     _el = elementos;
 
@@ -260,6 +276,10 @@ const FormHandler = (() => {
         .querySelectorAll(`input[name="${grupo}"]`)
         .forEach((r) => r.addEventListener('change', sincronizarCondicionais));
     });
+
+    document
+      .querySelectorAll('#questionarioForm .sub-checkbox input[type="checkbox"]')
+      .forEach((cb) => cb.addEventListener('change', _selecionarOpcaoDoSubitem));
 
     _el.btnSalvarProjeto.addEventListener('click', (e) => {
       e.preventDefault();

@@ -493,6 +493,7 @@ button:hover {
   height: auto;
   min-height: 50px;
   white-space: pre-wrap;
+  resize: none;
 }
 
 .report-placeholder {
@@ -534,13 +535,20 @@ button:hover {
   font-weight: bold;
 }
 
+/*
+ * A bolinha é desenhada com borda, não com `background`: o Chrome não imprime
+ * fundos por padrão ("Gráficos de plano de fundo" desmarcado) e o botão marcado
+ * saía vazio no PDF. `print-color-adjust` reforça para outros navegadores.
+ */
 .report-view input[type='radio']:checked::before {
   content: '';
   display: block;
-  width: 10px;
-  height: 10px;
+  width: 0;
+  height: 0;
+  border: 5px solid #000;
   border-radius: 50%;
-  background: #000;
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
   position: absolute;
   top: 50%;
   left: 50%;

@@ -28,7 +28,12 @@ function montarDOM() {
       <textarea id="reclamacao_outras_text" class="hidden-field campo-outras" rows="1"></textarea>
       <input type="checkbox" id="relatorio_foto_nao_check" />
       <textarea id="justificativa_foto" class="hidden-field"></textarea>
-      <input type="radio" name="danos_providencias" id="danos_normal_sem_remocao" value="normal_sem_remocao" />
+      <div>
+        <input type="radio" name="danos_providencias" id="danos_normal_sem_remocao" value="normal_sem_remocao" />
+        <div class="sub-checkbox">
+          <input type="checkbox" id="danos_normal_sem_remocao_edificacao" />
+        </div>
+      </div>
       <input type="radio" name="danos_providencias" id="danos_emergencial_outras" value="emergencial_outras" />
       <textarea id="danos_emergencial_outras_text" class="hidden-field"></textarea>
       <select id="responsavel_cargo">
@@ -138,6 +143,50 @@ describe('sincronizarCondicionais()', () => {
     document.getElementById('danos_normal_sem_remocao').checked = true;
     FormHandler.sincronizarCondicionais();
     expect(alvo.style.display).toBe('none');
+  });
+});
+
+describe('campo 08: subitens Edificação/Conteúdo', () => {
+  function iniciar() {
+    FormHandler.init({
+      autoSaveStatus: document.createElement('span'),
+      btnSalvarProjeto: document.createElement('button'),
+      inputCarregarProjeto: document.createElement('input'),
+      btnNovoQuestionario: document.createElement('button'),
+    });
+  }
+
+  function marcar(el, valor) {
+    el.checked = valor;
+    el.dispatchEvent(new Event('change'));
+  }
+
+  // Regressão: "Edificação" marcado com a opção do radio em branco no relatório.
+  test('marcar o subitem seleciona a opção a que ele pertence', () => {
+    iniciar();
+    marcar(document.getElementById('danos_normal_sem_remocao_edificacao'), true);
+    expect(document.getElementById('danos_normal_sem_remocao').checked).toBe(true);
+  });
+
+  test('marcar o subitem troca a opção selecionada e fecha o campo "outras"', () => {
+    iniciar();
+    marcar(document.getElementById('danos_emergencial_outras'), true);
+    expect(document.getElementById('danos_emergencial_outras_text').style.display).toBe('block');
+
+    marcar(document.getElementById('danos_normal_sem_remocao_edificacao'), true);
+
+    expect(document.getElementById('danos_normal_sem_remocao').checked).toBe(true);
+    expect(document.getElementById('danos_emergencial_outras').checked).toBe(false);
+    expect(document.getElementById('danos_emergencial_outras_text').style.display).toBe('none');
+  });
+
+  test('desmarcar o subitem não mexe na opção', () => {
+    iniciar();
+    const radio = document.getElementById('danos_normal_sem_remocao');
+    const edificacao = document.getElementById('danos_normal_sem_remocao_edificacao');
+    marcar(edificacao, true);
+    marcar(edificacao, false);
+    expect(radio.checked).toBe(true);
   });
 });
 
