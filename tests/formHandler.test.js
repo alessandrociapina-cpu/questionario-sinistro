@@ -25,7 +25,7 @@ function montarDOM() {
     <form id="questionarioForm">
       <input type="text" id="endereco" />
       <input type="checkbox" id="reclamacao_outras_check" />
-      <input type="text" id="reclamacao_outras_text" class="hidden-field" />
+      <textarea id="reclamacao_outras_text" class="hidden-field campo-outras" rows="1"></textarea>
       <input type="checkbox" id="relatorio_foto_nao_check" />
       <textarea id="justificativa_foto" class="hidden-field"></textarea>
       <input type="radio" name="danos_providencias" id="danos_normal_sem_remocao" value="normal_sem_remocao" />
@@ -98,7 +98,7 @@ describe('carregarEstado()', () => {
     });
 
     const campo = document.getElementById('reclamacao_outras_text');
-    expect(campo.style.display).toBe('inline-block');
+    expect(campo.style.display).toBe('block');
     expect(campo.value).toBe('motivo X');
   });
 });
@@ -107,7 +107,7 @@ describe('sincronizarCondicionais()', () => {
   test('mostra o campo quando o checkbox está marcado', () => {
     document.getElementById('reclamacao_outras_check').checked = true;
     FormHandler.sincronizarCondicionais();
-    expect(document.getElementById('reclamacao_outras_text').style.display).toBe('inline-block');
+    expect(document.getElementById('reclamacao_outras_text').style.display).toBe('block');
   });
 
   test('esconde e limpa o campo quando o checkbox é desmarcado', () => {

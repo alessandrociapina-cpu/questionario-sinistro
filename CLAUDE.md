@@ -61,13 +61,17 @@ Três caminhos, todos em `formHandler.js`:
 `sincronizarCondicionais()` reaplica a visibilidade dos campos "Outras" a partir do estado atual —
 é o que faz um rascunho restaurado reabrir os campos que estavam preenchidos.
 
+Os campos "Outras" são `<textarea class="campo-outras" rows="1">` que crescem com o texto. No
+relatório, `_valorComoTexto()` troca todo campo de texto preenchido por um `<span>`: `input` e
+`textarea` não quebram linha na impressão, e o texto que passava da largura sumia do PDF.
+
 ## Service Worker e versionamento
 
-Versão atual: **2**. A cada release, **todos** estes pontos devem ser atualizados com o novo número
-(ex: `3`):
+Versão atual: **3**. A cada release, **todos** estes pontos devem ser atualizados com o novo número
+(ex: `4`):
 
-- `sw.js`: `CACHE_NAME = 'sinistro-app-v3'` e todos os `?v=3` em `urlsToCache`
-- `index.html`: `?v=3` em todos os `<link>` e `<script>` + "Versão 3 | Última atualização: DD/MM/AAAA"
+- `sw.js`: `CACHE_NAME = 'sinistro-app-v4'` e todos os `?v=4` em `urlsToCache`
+- `index.html`: `?v=4` em todos os `<link>` e `<script>` + "Versão 4 | Última atualização: DD/MM/AAAA"
 
 Os arquivos de `vendor/` são cacheados sem `?v=` — a versão está fixada no nome da dependência.
 
@@ -79,7 +83,7 @@ invisível para quem já abriu a versão anterior, mesmo com a estratégia netwo
 
 - **Framework**: Jest 29 + jest-environment-jsdom (docblock `@jest-environment jsdom` por arquivo)
 - **Localização**: `tests/*.test.js`
-- Cobrem `utils`, `modules/storage` (via `fake-indexeddb`) e `formHandler` (via jsdom, com `Editor`
+- Cobrem `utils`, `modules/storage` (via `fake-indexeddb`), `formHandler` e `reportGenerator` (via jsdom, com `Editor`
   e os wrappers do IndexedDB mockados)
 
 ## Linting e formatação

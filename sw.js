@@ -1,18 +1,18 @@
-const CACHE_NAME = 'sinistro-app-v2';
+const CACHE_NAME = 'sinistro-app-v3';
 
 const urlsToCache = [
   './',
   './index.html',
-  './style.css?v=2',
+  './style.css?v=3',
   './vendor/quill.snow.css',
   './vendor/quill.js',
-  './utils.js?v=2',
-  './domUtils.js?v=2',
-  './modules/storage.js?v=2',
-  './modules/editor.js?v=2',
-  './formHandler.js?v=2',
-  './reportGenerator.js?v=2',
-  './script.js?v=2',
+  './utils.js?v=3',
+  './domUtils.js?v=3',
+  './modules/storage.js?v=3',
+  './modules/editor.js?v=3',
+  './formHandler.js?v=3',
+  './reportGenerator.js?v=3',
+  './script.js?v=3',
   './manifest.json',
   './sabesp-logo.png',
   './icon-192.png',

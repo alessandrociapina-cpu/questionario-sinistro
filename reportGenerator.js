@@ -51,6 +51,20 @@ const ReportGenerator = (() => {
     return span;
   }
 
+  /**
+   * Inputs e textareas não quebram linha na impressão: o que passa da largura
+   * do campo some do PDF. No relatório, todo texto preenchido vira um <span>
+   * comum, que quebra linha normalmente. As classes e o id são mantidos para o
+   * layout e para os ajustes seguintes; `textContent` garante texto puro.
+   */
+  function _valorComoTexto(clone, valor) {
+    const span = document.createElement('span');
+    span.className = `${clone.className} report-valor`.trim();
+    if (clone.id) span.id = clone.id;
+    span.textContent = valor;
+    clone.parentNode.replaceChild(span, clone);
+  }
+
   function _copiarValores(formOriginal, clonedForm) {
     const originais = {};
     formOriginal.querySelectorAll('input, textarea, select').forEach((el) => {
@@ -72,6 +86,11 @@ const ReportGenerator = (() => {
           clone.parentNode.replaceChild(_placeholder('__:__'), clone);
           return;
         }
+      }
+
+      if (original.value && (original.tagName === 'TEXTAREA' || original.type === 'text')) {
+        _valorComoTexto(clone, original.value);
+        return;
       }
 
       if (original.type === 'checkbox' || original.type === 'radio') {
